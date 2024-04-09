@@ -20,6 +20,12 @@ public class BCD extends Application {
 	
 	public void start(Stage stage) {
 		
+		for (int i = 0; i < 10; i++) {
+            String val = Integer.toBinaryString(i);
+            while (val.length() < 4) { val = "0" + val; }
+            ht.put(i, val);
+        }
+		
 		GridPane grid = new GridPane();
 		
 		grid.setHgap(10);
@@ -27,7 +33,7 @@ public class BCD extends Application {
 		grid.setPadding(new Insets(10));
 		
 		Button pCalcola = new Button("codifica");
-		pCalcola.setOnAction(e -> {});
+		pCalcola.setOnAction(e -> codifica());
 		
 		grid.add(new Label("Decimale da convertire"), 0, 0);
 		grid.add(tNum, 0, 1);
@@ -39,6 +45,26 @@ public class BCD extends Application {
 		stage.setScene(scene);
 		stage.setTitle("Codifica BCD");
 		stage.show();
+		
+	}
+	
+	private void codifica() {
+
+		
+		String[] sNums = tNum.getText().split("");
+		String result = "";
+		
+		if (sNums.length > 0) {
+			
+			for (int i = 0; i < sNums.length; i++) {
+				result+=ht.get(Integer.parseInt(sNums[i]));
+			}
+			
+			lRis.setText(result);
+			
+		} else {
+			System.out.println("Inserisci un valore valido!");
+		}
 		
 	}
 	
