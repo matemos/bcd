@@ -6,9 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.geometry.Insets;
 import java.util.Hashtable;
+import java.util.Optional;
 
 public class BCD extends Application {
 
@@ -20,6 +24,7 @@ public class BCD extends Application {
 	
 	public void start(Stage stage) {
 		
+		// Riempimento Hashtable: { intero : binario }
 		for (int i = 0; i < 10; i++) {
             String val = Integer.toBinaryString(i);
             while (val.length() < 4) { val = "0" + val; }
@@ -49,21 +54,25 @@ public class BCD extends Application {
 	}
 	
 	private void codifica() {
-
 		
-		String[] sNums = tNum.getText().split("");
-		String result = "";
+		// Divide il numero cifra per cifra e associa ad ognuna il corrispettivo binario per unirle nella stringa result
 		
-		if (sNums.length > 0) {
-			
+		try {
+			String[] sNums = tNum.getText().split("");
+			String result = "";
+		
 			for (int i = 0; i < sNums.length; i++) {
 				result+=ht.get(Integer.parseInt(sNums[i]));
 			}
 			
 			lRis.setText(result);
 			
-		} else {
-			System.out.println("Inserisci un valore valido!");
+		} catch(Exception e) {
+			Alert alert = new Alert(AlertType.WARNING, "Inserisci un valore valido", ButtonType.CANCEL);
+			alert.showAndWait();
+
+			if (alert.getResult() == ButtonType.CANCEL) { alert.close(); }
+			
 		}
 		
 	}
